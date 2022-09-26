@@ -13,11 +13,6 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        if l1.val == 0:
-            return l2
-        elif l2.val == 0:
-            return l1
-
         rest = 0
         root_node = ListNode()
         node = root_node
@@ -27,7 +22,7 @@ class Solution:
         l1 = l1.next
         l2 = l2.next
 
-        while l1 is not None and l2 is not None:
+        while l1 is not None or l2 is not None:
             l1_val = l1.val if l1 is not None else 0
             l2_val = l2.val if l2 is not None else 0
 
@@ -41,10 +36,8 @@ class Solution:
 
         # Add the last rest value if last sum > 10
         if rest > 0:
-            node.val = rest
-        if node.val == 0:
-            node.next = None
-
+            node.next = ListNode()
+            node.next.val = rest
         return root_node
 
     def getSumAndRest(self, l1_val, l2_val, rest):
@@ -73,10 +66,16 @@ def createArray(node):
 def main():
     s = Solution()
 
+    x1 = createLinkedList([0,8,6,5,6,8,3,5,7])
+    x2 = createLinkedList([6,7,8,0,8,5,8,9,7])
+    y = createArray(s.addTwoNumbers(x1, x2))
+    assert(y == [6,5,5,6,4,4,2,5,5,1])  # Got [6,7,8,0,8,5,8,9,7]
+
     x1 = createLinkedList([9,9,9,9,9,9,9])
     x2 = createLinkedList([9,9,9,9])
     y = createArray(s.addTwoNumbers(x1, x2))
     assert(y == [8,9,9,9,0,0,0,1])
+
     x1 = createLinkedList([2,4,3])
     x2 = createLinkedList([5,6,4])
     y = createArray(s.addTwoNumbers(x1, x2))
@@ -86,7 +85,6 @@ def main():
     x2 = createLinkedList([0])
     y = createArray(s.addTwoNumbers(x1, x2))
     assert(y == [0])
-
 
     return 0
 
