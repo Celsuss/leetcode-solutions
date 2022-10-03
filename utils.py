@@ -14,6 +14,9 @@ def createLinkedListFromArray(array):
 
 def createArrayFromLinkedList(node):
     array = []
+    if node is None:
+        return array
+
     while node.next is not None:
         array.append(node.val)
         node = node.next
