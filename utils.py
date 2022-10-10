@@ -13,17 +13,18 @@ def createTreeFromArray(array):
     if array is None or len(array) == 0:
         return None
         
-    def createNode(i):
-        if i >= len(array):
+    def createNode(i, offset):
+        if i >= len(array) or array[i] == None:
             return None
 
         node = TreeNode(array[i])
-        node.left = createNode(i * 2 + 1)
-        node.right = createNode(i * 2 + 2)
+        i-= offset
+        
+        node.left = createNode(i * 2 + 1, 0)
+        node.right = createNode(i * 2 + 2, 0 if node.left is not None else offset + 1)
 
         return node
-    
-    return createNode(0)
+    return createNode(0, 0)
 
 def createArrayFromTree(root: TreeNode):
     if root is None or root.val is None:
