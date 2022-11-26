@@ -8,27 +8,23 @@
 class Solution:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
         out = []
-        candidates
-
-        for i in range(len(candidates)-1, 0, -1):
-            self.backtrack(candidates, [candidates[i]], target, out)
+        
+        self.backtrack(candidates, [], target, 0, out)
 
         return out
 
-    def backtrack(self, candidates: list[int], current: list[int], target: int, solutions: list[list[int]]):
+    def backtrack(self, candidates: list[int], current: list[int], target: int, start: int, solutions: list[list[int]]):
         current_sum = sum(current)
         if current_sum == target:
             solutions.append(current[:])
-            return -1
+            return
         if current_sum > target:
-            return -1
+            return
 
-        for i in range(len(candidates)):
+        for i in range(start, len(candidates)):
             current.append(candidates[i])
-            res = self.backtrack(candidates, current, target, solutions)
+            res = self.backtrack(candidates, current, target, i, solutions)
             current.pop()
-            if res == -1:
-                break
         
         return 0
         
@@ -40,7 +36,7 @@ def main():
     candidates = [2,3,6,7]
     target = 7
     out = s.combinationSum(candidates, target)
-    assert(out == [[7],[3,2,2]])
+    assert(out == [[2,2,3],[7]])
 
     candidates = [2,3,5]
     target = 8
